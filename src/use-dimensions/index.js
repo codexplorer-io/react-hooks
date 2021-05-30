@@ -17,7 +17,7 @@ export const useDimensions = type => {
         return () => {
             Dimensions.removeEventListener('change', onChange);
         };
-    }, [setData]);
+    }, [setData, type]);
 
     return data;
 };
