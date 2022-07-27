@@ -8,14 +8,12 @@ export const useDimensions = type => {
     const [data, setData] = useState(Dimensions.get(type));
 
     useEffect(() => {
-        const onChange = result => {
+        const handler = Dimensions.addEventListener('change', result => {
             setData(result[type]);
-        };
-
-        Dimensions.addEventListener('change', onChange);
+        });
 
         return () => {
-            Dimensions.removeEventListener('change', onChange);
+            handler.remove();
         };
     }, [setData, type]);
 
