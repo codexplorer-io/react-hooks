@@ -6,9 +6,11 @@ import { useDimensions } from './index';
 
 jest.mock('react-native/Libraries/Utilities/Dimensions', () => ({
     get: type => ({ width: `type: ${type}` }),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn()
+    addEventListener: jest.fn()
 }));
+
+const removeEventListener = jest.fn();
+Dimensions.addEventListener.mockReturnValue({ remove: removeEventListener });
 
 describe('useDimensions', () => {
     const createHookRenderer = ({ result, type = 'window' }) => () => {
@@ -93,17 +95,11 @@ describe('useDimensions', () => {
                 injectable(useState, createMockUseState({ setData }))
             ]
         });
-        const onChange = Dimensions.addEventListener.mock.calls[0][1];
 
-        expect(Dimensions.removeEventListener).not.toHaveBeenCalled();
+        expect(removeEventListener).not.toHaveBeenCalled();
 
         removeHandler();
 
-        expect(Dimensions.removeEventListener).toHaveBeenCalledTimes(1);
-        expect(Dimensions.removeEventListener).toHaveBeenNthCalledWith(
-            1,
-            'change',
-            onChange
-        );
+        expect(removeEventListener).toHaveBeenCalledTimes(1);
     });
 });
