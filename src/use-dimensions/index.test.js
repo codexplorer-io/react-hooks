@@ -4,13 +4,9 @@ import { injectable } from 'react-magnetic-di';
 import { mountWithDi } from '@codexporer.io/react-test-utils';
 import { useDimensions } from './index';
 
-jest.mock('react-native/Libraries/Utilities/Dimensions', () => ({
-    get: type => ({ width: `type: ${type}` }),
-    addEventListener: jest.fn()
-}));
-
+Dimensions.get = type => ({ width: `type: ${type}` });
 const removeEventListener = jest.fn();
-Dimensions.addEventListener.mockReturnValue({ remove: removeEventListener });
+Dimensions.addEventListener = jest.fn(() => ({ remove: removeEventListener }));
 
 describe('useDimensions', () => {
     const createHookRenderer = ({ result, type = 'window' }) => () => {
