@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
-import { di } from 'react-magnetic-di';
 
 export const useDimensions = type => {
-    di(useEffect, useState);
-
     const [data, setData] = useState(Dimensions.get(type));
 
     useEffect(() => {
