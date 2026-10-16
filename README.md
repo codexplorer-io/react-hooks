@@ -58,7 +58,7 @@ Subscribes to React Native `Dimensions` changes and updates component state when
 | `type` | `'window' \| 'screen'` | — | Dimension target to monitor |
 
 ### `useDomElementDimensions(props): { width: number; height: number }`
-Web-compatible hook that measures dimensions of a DOM element using `ResizeObserver` / `getBoundingClientRect`.
+Web-compatible hook that measures dimensions (`offsetWidth`, `offsetHeight`) of a DOM element with a `window` `'resize'` event listener.
 
 | Property | Type | Description |
 | :--- | :--- | :--- |

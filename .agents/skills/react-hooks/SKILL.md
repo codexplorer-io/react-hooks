@@ -57,6 +57,12 @@ export function ScreenMonitor({ activeStep }: { activeStep: number }) {
 | `type` | `'window' \| 'screen'` | Dimensions target |
 | **Returns** | `{ width: number, height: number, scale: number, fontScale: number }` | Dimensions object |
 
+### `useDomElementDimensions(props): { width: number; height: number }`
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `elementRef` | `{ current: HTMLElement \| null }` | React ref attached to the target DOM element |
+| **Returns** | `{ width: number, height: number }` | Measured DOM element dimensions (via `offsetWidth`/`offsetHeight`) |
+
 ### `useOnMountEffect(props): void`
 | Option | Type | Description |
 | :--- | :--- | :--- |
@@ -68,3 +74,5 @@ export function ScreenMonitor({ activeStep }: { activeStep: number }) {
 ## Critical Rules & Guidelines
 1. **Pass Target to `useDimensions`**: Must supply either `'window'` or `'screen'`.
 2. **First Render Undefined**: Be aware that `usePrevious` returns `undefined` on the very first render.
+3. **Ref-Guarded Mount Effect**: `useOnMountEffect` safely references the latest callbacks via internal mutable ref without triggering re-runs.
+4. **Peer Dependencies**: Requires `react` and `react-native` (for `useDimensions`).
